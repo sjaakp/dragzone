@@ -1,0 +1,15 @@
+{
+  "name": "@sjaakp/dragzone",
+  "version": "1.0.0",
+  "description": "Dragzone with draggables",
+  "main": "dragzone.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "input",
+    "drag"
+  ],
+  "author": "sjaakpriester.nl",
+  "license": "MIT"
+}
