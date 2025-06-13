@@ -1,6 +1,6 @@
 /*
  *  dragzone.js - drag small HTML element(s) inside a bigger element.
- *  Version 1.0.0
+ *  Version 1.0.1
  *  (c) Sjaak Priester, Amsterdam, 2025 MIT license
  *  https://sjaakpriester.nl/software/dragzone
  *  https://github.com/sjaakp/dragzone
@@ -118,11 +118,15 @@ DragZone.prototype = {
     },
 };
 
-const style = document.createElement('style');
-style.appendChild(document.createTextNode(`[data-dragzone]{position:relative;overflow:clip;}
+function dragzone() {
+    const style = document.createElement('style');
+    style.appendChild(document.createTextNode(`[data-dragzone]{position:relative;overflow:clip;}
 [data-draggable]{position:absolute;top:0;left:0;user-select:none;cursor:move;}.zone-disabled [data-draggable] {cursor: auto;}`));
-document.head.appendChild(style);
+    document.head.appendChild(style);
 
-document.querySelectorAll('[data-dragzone]').forEach(elt => {
-    new DragZone(elt);
-});
+    document.querySelectorAll('[data-dragzone]').forEach(elt => {
+        new DragZone(elt);
+    });
+}
+
+dragzone();

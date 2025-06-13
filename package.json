@@ -1,6 +1,6 @@
 {
   "name": "@sjaakp/dragzone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dragzone with draggables",
   "main": "dragzone.js",
   "scripts": {
