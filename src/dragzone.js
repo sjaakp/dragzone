@@ -1,6 +1,6 @@
 /*
  *  dragzone.js - drag small HTML element(s) inside a bigger element.
- *  Version 1.0.1
+ *  Version 1.0.2
  *  (c) Sjaak Priester, Amsterdam, 2025 MIT license
  *  https://sjaakpriester.nl/software/dragzone
  *  https://github.com/sjaakp/dragzone
@@ -15,13 +15,13 @@ function DragZone(elmt)
     this.precision = +(elmt.dataset.precision || 3);
 
     this.onPointerMove = function (evt) {
-        const dx = evt.pageX - this.x,
-            dy = evt.pageY - this.y,
+        const dx = evt.clientX - this.x,
+            dy = evt.clientY - this.y,
             w2 = this.dragged.offsetWidth / 2,
             h2 = this.dragged.offsetHeight / 2;
 
-        this.x = evt.pageX;
-        this.y = evt.pageY;
+        this.x = evt.clientX;
+        this.y = evt.clientY;
 
         const left = Math.min(
             Math.max(this.dragged.offsetLeft + dx, - w2),
@@ -38,8 +38,6 @@ function DragZone(elmt)
     }.bind(this);
 
     this.onPointerUp = function () {
-        console.log(this.getPositions({ changed: this.dragged.dataset.draggable }));
-
         this.zone.dispatchEvent(new CustomEvent('dragzone.changed', {
             detail: this.getPositions({ changed: this.dragged.dataset.draggable })
         }));
@@ -51,8 +49,8 @@ function DragZone(elmt)
         elt.addEventListener('pointerdown', evt => {
             if (! this.disabled) {
                 this.dragged = evt.target;
-                this.x = evt.pageX;
-                this.y = evt.pageY;
+                this.x = evt.clientX;
+                this.y = evt.clientY;
                 document.addEventListener('pointerup', this.onPointerUp);
                 this.zone.addEventListener('pointermove', this.onPointerMove);
                 this.zone.dispatchEvent(new CustomEvent('dragzone.changing', {
@@ -118,7 +116,7 @@ DragZone.prototype = {
     },
 };
 
-function dragzone() {
+DragZone.init = () => {
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(`[data-dragzone]{position:relative;overflow:clip;}
 [data-draggable]{position:absolute;top:0;left:0;user-select:none;cursor:move;}.zone-disabled [data-draggable] {cursor: auto;}`));
@@ -129,4 +127,4 @@ function dragzone() {
     });
 }
 
-dragzone();
+DragZone.init();
